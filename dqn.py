@@ -4,16 +4,16 @@ import numpy as np
 
 class DQN:
     def __init__(self, model, env,
-                 epsilon=1, epsilon_decay=0.995, epsilon_min=0.1,
+                 epsilon=0.5, epsilon_decay=0.995, epsilon_min=0.1,
                  gamma=0.995,
-                 history_size=10000, train_size=1024, batch_size=32,
+                 history_size=10000, epochs=10, train_size=10000, batch_size=256,
                  max_steps=5000,
                  log_every_n_steps=50,
                  evalutation_size=10,
                  target_score=500,
                  reward_func=None):
         """
-        DQN - Reinforcement learling agent
+        DQN - Reinforcement learning agent
         Parameters:
             model: model with fit() and predict() methods
             env: gym environment
@@ -22,6 +22,7 @@ class DQN:
             epsilon_min: minimum value of epsilon
             gamma: discount for the next state
             history_size: total number of stored observations among all epidodes
+            epochs: number of training epochs per episode
             train_size: number of obervations to train on after each episode
             batch_size: batch size for fit() method of the model
             max_steps: maximum number of steps in episode
@@ -38,6 +39,7 @@ class DQN:
         self.epsilon_min = epsilon_min
         self.gamma = gamma
         self.history_size = history_size
+        self.epochs = epochs
         self.train_size = train_size
         self.batch_size = batch_size
         self.max_steps = max_steps
@@ -136,8 +138,8 @@ class DQN:
         self.model.fit(
             data[:, :self.n_inputs],
             data[:, -self.n_actions:],
-            batch_size=min(self.batch_size, data.shape[0]),
-            epochs=1,
+            batch_size=self.batch_size,
+            epochs=10,
             verbose=0)
         self._epsilon = max(self.epsilon_min, self._epsilon*self.epsilon_decay)
 

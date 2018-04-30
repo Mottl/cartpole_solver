@@ -19,8 +19,8 @@ if __name__ == "__main__":
 
     # create model
     model = Sequential()
-    model.add(Dense(units=128, activation="tanh", input_dim=n_inputs))
-    model.add(Dense(units=128, activation="tanh"))
+    model.add(Dense(units=24, activation="tanh", input_dim=n_inputs))
+    model.add(Dense(units=24, activation="tanh"))
     model.add(Dense(units=n_actions, activation="linear"))
     model.compile(loss="mse", optimizer=Adam(lr=0.1, decay=0.03))
 
