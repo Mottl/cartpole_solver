@@ -174,7 +174,7 @@ class DQN:
             observation = self.env.reset()
 
             for j in range(self.max_steps):
-                if _ < render_games:  # render only `plays` episodes
+                if _ < render_games:  # render only `render_games` episodes
                     self.env.render()
                 action = self.get_action(observation)
                 next_observation, reward, done, info = self.env.step(action)
