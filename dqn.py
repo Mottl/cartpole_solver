@@ -83,7 +83,7 @@ class DQN:
 
     def fit_one(self):
         """
-        Train model on a single episode
+        Train the model on a single episode
         """
 
         score = 0
@@ -145,14 +145,14 @@ class DQN:
 
     def fit(self, episodes=2000):
         """
-        Fit model
+        Fit the model
         """
 
         for i in range(1, episodes + 1):
             self.fit_one()
             
-            if i % self.log_every_n_steps==0 and i!=0:
-                score = self.test()
+            if i % self.log_every_n_steps==0:
+                score = self.evaluate()
                 print("Episode %i/%i: avg. score=%.1f, epsilon=%.2f, history_size=%i, train_size=%i" % (
                     i, episodes, score, self._epsilon, len(self.history), min(self.train_size, len(self.history))))
                 if score >= self.target_score:
@@ -161,9 +161,11 @@ class DQN:
 
         print("Target score is not reached")
 
-    def test(self):
+    def evaluate(self, render_games=1):
         """
-        Evaluate model without random actions
+        Evaluate the model's performance without random actions
+
+        render_games: number of games withing evaluation_size to render on screen
         """
 
         scores = list()
@@ -172,7 +174,7 @@ class DQN:
             observation = self.env.reset()
 
             for j in range(self.max_steps):
-                if _ < 2:  # look at first 2 episodes
+                if _ < render_games:  # render only `plays` episodes
                     self.env.render()
                 action = self.get_action(observation)
                 next_observation, reward, done, info = self.env.step(action)
