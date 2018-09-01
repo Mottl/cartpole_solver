@@ -21,7 +21,7 @@ class DQN:
             epsilon_decay: decay of epsilon on the next training episode
             epsilon_min: minimum value of epsilon
             gamma: discount for the next state
-            history_size: total number of stored observations among all epidodes
+            history_size: total number of stored observations among all episodes
             epochs: number of training epochs per episode
             train_size: number of obervations to train on after each episode
             batch_size: batch size for fit() method of the model
